@@ -17,3 +17,63 @@ let ballY = height/2;
 let ballSpeedX = 2;
 let ballSpeedY = 2;
 
+
+let upPressed = false;
+let downPressed = false;
+let wPressed = false;
+let sPressed = false;
+
+document.addEventListener("keydown", (event)=>
+{
+    if(event.key === "ArrowUp")
+    {
+        upPressed = true;
+    }
+    else if(event.key === "ArrowDown")
+    {
+        downPressed = true;
+    }
+    else if(event.key === "w")
+    {
+        wPressed = true;
+    }
+    else if(event.key === "s")
+    {
+        sPressed = true;
+    }
+});
+
+document.addEventListener("keyup", (event)=>
+{
+    if(event.key === "ArrowUp")
+    {
+        upPressed = false;
+    }
+    else if(event.key === "ArrowDown")
+    {
+        downPressed = false;
+    }
+    else if(event.key === "w")
+    {
+        wPressed = false;
+    }
+    else if(event.key === "s")
+    {
+        sPressed = false;
+    }
+});
+
+function update()
+{
+
+}
+
+
+
+function gameLoop()
+{
+    update();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
