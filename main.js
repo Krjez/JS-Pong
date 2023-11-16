@@ -73,6 +73,33 @@ gameLoop();
 
 function update()
 {
+    if(wPressed){
+        player1Y -= 5;
+    }
+    else if(sPressed)
+    {
+        player1Y += 5;
+    }
+    else if(upPressed)
+    {
+        player2Y -= 5;
+    }
+    else if(downPressed)
+    {
+        player2Y += 5;
+    }
+
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+
+    collisionDetection();
+
+    drawRect(0, 0, width, height, "#eee");
+    drawRect(0, player1Y, paddleWidth, paddleHeight, "black");
+    drawRect(width - paddleWidth, player2Y, paddleWidth, paddleHeight, "black");
+    drawCircle(ballX, ballY, ballRadius,  "black");
+    drawText(player1Score, width/4, 50, "black");
+    drawText(player2Score, 3*width/4, 50, "black");
 
 }
 
@@ -82,6 +109,12 @@ function drawCircle(x, y, r, color)
     context.beginPath();
     context.arc(x, y, r, 0, Math.PI * 2, false);
     context.fill();
+}
+
+function drawRect(x, y, w, h, color)
+{
+    context.fillStyle = color;
+    context.fillRect(x, y, w, h);
 }
 
 function drawText(text, x, y, color)
@@ -111,7 +144,7 @@ function collisionDetection()
         ballSpeedY = deltaY * 0.35;
     }
 
-    if(ballX - ballRadius < paddleWidth
+    if(ballX + ballRadius > width - paddleWidth
         && ballY > player2Y
         && ballY < player2Y + paddleHeight)
     {
@@ -120,7 +153,7 @@ function collisionDetection()
         ballSpeedY = deltaY * 0.35;
     }
 
-    if(ballY - ballRadius > 0
+    if(ballY - ballRadius < 0
         || ballY + ballRadius > height)
     {
         ballSpeedY = -ballSpeedY;
@@ -129,11 +162,11 @@ function collisionDetection()
     if(ballX < 0)
     {
         player2Score++;
-        reset();
+        resetGame();
     }
     else if(ballX > width)
     {
         player1Score++;
-        reset();
+        resetGame();
     }
 }
